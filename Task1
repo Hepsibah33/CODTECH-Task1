@@ -1,0 +1,142 @@
+/*key features of TODO LIST :
+ ->Create, edit, and organize tasks
+ ->Categorize tasks by Projects or tags.*/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fdfbdb, #a1ffce);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            width: 400px;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .input-container input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #4caf50;
+            border-radius: 4px;
+            outline: none;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .input-container button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .input-container button:hover {
+            background-color: #45a049;
+        }
+        .tasks-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        .task-item input[type="radio"] {
+            accent-color: #4caf50;
+            margin-right: 10px;
+        }
+        .task-item label {
+            flex: 1;
+        }
+        .task-item button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+            color: #4caf50;
+        }
+        .task-item button:hover {
+            color: #45a049;
+        }
+        .task-item button.edit:hover {
+            color: #ffa500;
+        }
+        .task-item button.delete:hover {
+            color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input-container">
+            <input type="text" id="new-task" placeholder="Add a new task">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="tasks-list" class="tasks-list"></ul>
+    </div>
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('new-task');
+            const taskText = taskInput.value.trim();
+            if (taskText !== '') {
+                const tasksList = document.getElementById('tasks-list');
+                const taskItem = document.createElement('li');
+                taskItem.className = 'task-item';
+                taskItem.innerHTML = `
+                    <input type="radio">
+                    <label>${taskText}</label>
+                    <button class="edit" onclick="editTask(this)">Edit</button>
+                    <button class="delete" onclick="deleteTask(this)">Delete</button>
+                `;
+                tasksList.appendChild(taskItem);
+                taskInput.value = '';
+            }
+        }
+
+        function deleteTask(button) {
+            const taskItem = button.parentElement;
+            taskItem.remove();
+        }
+
+        function editTask(button) {
+            const taskItem = button.parentElement;
+            const label = taskItem.querySelector('label');
+            const newTaskText = prompt('Edit your task:', label.textContent);
+            if (newTaskText !== null) {
+                label.textContent = newTaskText;
+            }
+        }
+    </script>
+</body>
+</html>
